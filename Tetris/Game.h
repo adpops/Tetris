@@ -2,7 +2,7 @@
 
 #include "GraphicsEngine.h"
 
-class Game
+class Game 
 {
 private:
 	int * board;
