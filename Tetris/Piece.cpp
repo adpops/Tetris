@@ -1,8 +1,12 @@
 #include "Piece.h"
 
-Piece::Piece(GraphicsEngine * ge, Game * game) {
+Piece::Piece(GraphicsEngine * ge, int type) {
 	this->ge = ge;
-	this->game = game;
+	
+	this->type = type;
+	rotation = false;
+	rowPos = 0;
+	colPos = 5;
 }
 
 Piece::~Piece() {
@@ -16,20 +20,20 @@ int Piece::getType() {
 	return type;
 }
 
-void Piece::setRowOffset(int offset) {
-	rowOffset = offset;
+void Piece::setRowPos(int offset) {
+	rowPos = offset;
 }
 
-void Piece::setColOffset(int offset) {
-	colOffset = offset;
+void Piece::setColPos(int offset) {
+	colPos = offset;
 }
 
-int Piece::getRowOffset() {
-	return rowOffset;
+int Piece::getRowPos() {
+	return rowPos;
 }
 
-int Piece::getColOffset() {
-	return colOffset;
+int Piece::getColPos() {
+	return colPos;
 }
 
 void Piece::setRotated(bool rotated) {
@@ -39,3 +43,5 @@ void Piece::setRotated(bool rotated) {
 bool Piece::getRotated() {
 	return rotation;
 }
+
+

@@ -110,14 +110,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     PAINTSTRUCT ps;
     HDC hdc;
-    GraphicsEngine * ge;
-    Game * game;
+    GraphicsEngine * ge = NULL;
+    Game * game = NULL;
 
     switch (message)
     {
     case WM_CREATE:
         hdc = GetDC(hWnd);
         ge = new GraphicsEngine(hdc, hWnd, TILESIZE, MAPWIDTH, MAPHEIGHT);
+        game = new Game(ge, MAPWIDTH, MAPHEIGHT);
         ReleaseDC(hWnd, hdc);
         break;
     case WM_COMMAND:
@@ -141,12 +142,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         {
             
             hdc = BeginPaint(hWnd, &ps);
-            // TODO: Add any drawing code that uses hdc here...
-            TCHAR greeting[] = _T("Hello, Windows desktop!");
-            
-            TextOut(hdc, 5, 5, greeting, _tcslen(greeting));
+            game->paint();
             EndPaint(hWnd, &ps);
+            break;
         }
+        break;
+    case WM_KEYDOWN:
+        game->keyPressed(wParam);
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
