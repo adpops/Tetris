@@ -16,7 +16,10 @@ public:
 	~Game();
 	void keyPressed(int keyPress);
 	void move(int x, int y);
+	void rotate(bool rotateClockwise);
 	void paint();
+	void updateTime();
+	void updateBoard();
 	bool isGameOver();
 	void checkIfRowFull();
 	void clearRow();

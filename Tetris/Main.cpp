@@ -13,6 +13,8 @@ WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 const int TILESIZE = 16;
 const int MAPWIDTH = 10;
 const int MAPHEIGHT = 20;
+const int GAME_SPEED = 33;      
+const int TIMER_ID = 1;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -119,6 +121,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         hdc = GetDC(hWnd);
         ge = new GraphicsEngine(hdc, hWnd, TILESIZE, MAPWIDTH, MAPHEIGHT);
         game = new Game(ge, MAPWIDTH, MAPHEIGHT);
+        SetTimer(hWnd, TIMER_ID, GAME_SPEED, NULL);
         ReleaseDC(hWnd, hdc);
         break;
     case WM_COMMAND:
@@ -138,18 +141,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_PAINT:
-        {
-            
-            hdc = BeginPaint(hWnd, &ps);
-            game->paint();
-            EndPaint(hWnd, &ps);
-            break;
-        }
+    case WM_PAINT:           
+        hdc = BeginPaint(hWnd, &ps);
+        game->paint();
+        EndPaint(hWnd, &ps);
         break;
     case WM_KEYDOWN:
         game->keyPressed(wParam);
         break;
+    case WM_TIMER:
+        game->updateTime();
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

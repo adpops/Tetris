@@ -4,9 +4,11 @@ Game::Game(GraphicsEngine* ge, int width, int height) {
 	this->ge = ge;
 	MAPWIDTH = width;
 	MAPHEIGHT = width;
+	board = new int[MAPWIDTH * MAPHEIGHT]();
 }
 
 Game::~Game() {
+	delete[] board;
 }
 
 //Paint everything
@@ -28,10 +30,10 @@ void Game::keyPressed(int keyPress) {
 	case VK_SPACE: //Press Spacebar, move down to bottom instantly
 		break;
 	case 0x51: //Press Q, rotate counterclockwise
+		rotate(false);
 		break;
 	case 0x45: //Press E, rotate clockwise
-		break;
-	default:
+		rotate(true);
 		break;
 	}
 }
@@ -52,6 +54,33 @@ void Game::move(int y, int x) {
 		//TODO: set up new piece as this one has hit the bottom
 	}
 	//TODO: Repaint board to show updated movement
+}
+
+void Game::rotate(bool rotateClockwise) {
+	if (rotateClockwise) {
+		//TODO: Rotate Clockwise
+	}
+	else {
+		//TODO: Rotate Counterclockwise
+	}
+}
+
+void Game::updateBoard() {
+	if (isHitBottom(piece->getRowPos())) {
+		//TODO: Drop new piece
+	}
+	else {
+		//TODO: Won't work right now, as it updates every 1 frame. Need to set up so it only drops down every few frames.
+		piece->setRowPos(piece->getRowPos() + 1);
+	}
+}
+
+void Game::updateTime() {
+	if (!isGameOver()) {
+		updateBoard();
+		//TODO: Draw Board
+		paint();
+	}
 }
 
 bool Game::isGameOver() {

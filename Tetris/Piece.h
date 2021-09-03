@@ -5,9 +5,9 @@
 class Piece
 {
 private:
-	int type;
-	int rowPos;
-	int colPos;
+	int type; // one of 7 types of tetriminos
+	int rowPos; // y-axis
+	int colPos; // x-axis
 	bool rotation;
 
 	GraphicsEngine * ge;
